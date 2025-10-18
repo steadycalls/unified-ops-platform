@@ -125,12 +125,32 @@ export default function SitePandaSEOPage() {
             <span className="text-2xl">🐼</span>
             <h1 className="text-2xl font-bold text-foreground">SitePanda SEO Research</h1>
           </div>
-          <button 
-            onClick={() => router.push('/dashboard')} 
-            className="px-4 py-2 text-muted-foreground hover:text-foreground transition-smooth font-medium"
-          >
-            ← Back to Dashboard
-          </button>
+          <div className="flex gap-3">
+            <button 
+              onClick={() => router.push('/sitepandaseo/competitors')} 
+              className="px-4 py-2 text-foreground hover:text-primary transition-smooth font-medium"
+            >
+              🎯 Competitors
+            </button>
+            <button 
+              onClick={() => router.push('/sitepandaseo/site-plans')} 
+              className="px-4 py-2 text-foreground hover:text-primary transition-smooth font-medium"
+            >
+              📋 Site Plans
+            </button>
+            <button 
+              onClick={() => router.push('/sitepandaseo/content')} 
+              className="px-4 py-2 text-foreground hover:text-primary transition-smooth font-medium"
+            >
+              ✍️ Content
+            </button>
+            <button 
+              onClick={() => router.push('/dashboard')} 
+              className="px-4 py-2 text-muted-foreground hover:text-foreground transition-smooth font-medium"
+            >
+              ← Dashboard
+            </button>
+          </div>
         </div>
       </header>
 
