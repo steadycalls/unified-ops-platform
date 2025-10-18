@@ -2,28 +2,224 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './mobile-optimizations.css';
+/* Professional DU Fulfill Design System - Applied to Unified Operations Platform
+All colors MUST be HSL format for consistency
+*/
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-rgb: 15, 23, 42;
+    /* Professional color system */
+    --background: 0 0% 100%;
+    --foreground: 217 19% 27%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 217 19% 27%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 217 19% 27%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 217 91% 55%;
+
+    --secondary: 217 10% 96%;
+    --secondary-foreground: 217 19% 27%;
+
+    --muted: 217 10% 96%;
+    --muted-foreground: 217 10% 45%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 217 10% 89%;
+    --input: 217 10% 89%;
+    --ring: 217 91% 60%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
+
+    --radius: 0.75rem;
+
+    /* Professional gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 91% 70%));
+    --gradient-surface: linear-gradient(145deg, hsl(0 0% 100%), hsl(217 10% 98%));
+    
+    /* Elegant shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(217 19% 27% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(217 19% 27% / 0.1), 0 2px 4px -1px hsl(217 19% 27% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(217 19% 27% / 0.1), 0 4px 6px -2px hsl(217 19% 27% / 0.05);
+    
+    /* Professional transitions */
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    
+    /* Dark theme gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 50%), hsl(217 91% 60%));
+    --gradient-surface: linear-gradient(145deg, hsl(240 5.9% 10%), hsl(240 3.7% 15.9%));
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Mobile-specific enhancements */
+  @media (max-width: 640px) {
+    /* Ensure touch targets are at least 44x44px */
+    button, a, input, select, textarea {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    /* Prevent horizontal overflow */
+    body {
+      overflow-x: hidden;
+    }
+
+    /* Improve text readability on mobile */
+    h1 {
+      @apply text-2xl;
+    }
+
+    h2 {
+      @apply text-xl;
+    }
+
+    /* Better spacing for mobile cards */
+    .space-y-6 > * + * {
+      @apply mt-4;
+    }
+
+    /* Ensure dropdowns don't overflow */
+    [role="menu"], [role="listbox"] {
+      max-width: calc(100vw - 2rem);
+    }
+  }
+
+  /* Ensure proper touch scrolling on iOS */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hide scrollbars utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Prevent zoom on input focus (iOS) */
+  @media (max-width: 640px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+  }
+
+  /* Professional button styles */
+  button {
+    @apply transition-all duration-200;
+  }
+
+  button:active {
+    transform: scale(0.98);
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-md;
+  }
+
+  /* Focus visible styles */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
 }
 
+/* Custom utility classes */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-surface {
+    background: var(--gradient-surface);
+  }
+
+  .shadow-smooth {
+    box-shadow: var(--shadow-md);
+  }
+
+  .transition-smooth {
+    transition: var(--transition-smooth);
   }
 }
 
