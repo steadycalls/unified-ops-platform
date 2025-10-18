@@ -4,25 +4,34 @@
 
 The **Unified Operations Platform** is a multi-tenant SaaS application designed to streamline business operations, client management, project tracking, and SEO services. Built with a modern tech stack (Next.js 14, Node.js, PostgreSQL), it features a professional dark navy UI inspired by DUFulfill and includes integrated SEO research tools from SitePanda.
 
+**This platform serves three distinct business units:**
+1. **SitePanda** - SEO and local website generation services
+2. **Decisions Unlimited (DU)** - Business consulting and strategic services
+3. **Logic Inbound** - Marketing automation and lead generation
+
+Each business unit operates as a separate organization within the platform with its own branding, domain, clients, projects, and workflows while sharing the same underlying infrastructure.
+
 ---
 
 ## Platform Overview
 
 ### Purpose
-Centralized operations management platform for agencies and businesses to:
-- Manage clients and contacts
-- Track projects and opportunities
-- Document processes with SOPs
-- Integrate with external tools via webhooks
-- Conduct SEO keyword research and competitor analysis
-- Generate AI-powered content for websites
+Centralized operations management platform that serves multiple business units with:
+- **Multi-tenant architecture** supporting separate organizations
+- **Organization-specific branding** and customization
+- **Shared infrastructure** with isolated data
+- Client and contact management per organization
+- Project tracking and opportunity pipelines
+- Process documentation with SOPs
+- External tool integration via webhooks
+- SEO keyword research and competitor analysis (SitePanda)
+- AI-powered content generation (SitePanda)
 
 ### Target Users
-- Digital marketing agencies
-- Web development firms
-- SEO consultants
-- Business operations teams
-- Multi-location service businesses
+- **SitePanda Team:** SEO specialists, content creators, web developers
+- **Decisions Unlimited Team:** Business consultants, strategists, analysts
+- **Logic Inbound Team:** Marketing specialists, automation experts, lead generation
+- **Shared Users:** Operations managers, administrators across all units
 
 ---
 
@@ -67,7 +76,7 @@ Centralized operations management platform for agencies and businesses to:
 
 ## Feature Modules
 
-### 1. Authentication & Multi-Tenancy
+### 1. A### Multi-Tenant Architecture
 
 **Login System:**
 - Email/password authentication
@@ -75,18 +84,51 @@ Centralized operations management platform for agencies and businesses to:
 - Secure password hashing with bcrypt
 - Organization-based branding support
 - Session persistence with localStorage
+- Domain-based organization detection
 
 **Multi-Tenant Architecture:**
-- Organization-level data isolation
+- Organization-level data isolation (complete separation)
 - Role-based access control (admin, member, viewer)
 - User can belong to multiple organizations
-- Organization slug-based routing
-- Tenant-specific branding (logo, colors)
+- Organization slug-based routing (`/api/v1/:orgSlug/...`)
+- Tenant-specific branding (logo, colors, domain)
+
+**Three Primary Organizations:**
+
+1. **SitePanda** (`sitepanda`)
+   - **Domain:** sitepandaseo.com
+   - **Focus:** Local SEO website generation
+   - **Primary Features:** Keyword research, competitor analysis, site plans, content generation
+   - **Branding:** Panda emoji 🐼, SEO-focused messaging
+   - **Clients:** Local businesses needing SEO websites
+   - **Projects:** Website builds, content campaigns, SEO audits
+
+2. **Decisions Unlimited** (`du`)
+   - **Domain:** ducrm.com
+   - **Focus:** Business consulting and strategic planning
+   - **Primary Features:** Client management, project tracking, SOPs, documentation
+   - **Branding:** Professional consulting aesthetic
+   - **Clients:** Businesses seeking strategic guidance
+   - **Projects:** Consulting engagements, strategy development, implementation
+
+3. **Logic Inbound** (`logicinbound`)
+   - **Domain:** my.logicinbound.com
+   - **Focus:** Marketing automation and lead generation
+   - **Primary Features:** Opportunity pipeline, integrations, webhooks, automation
+   - **Branding:** Marketing-focused messaging
+   - **Clients:** Businesses needing lead generation
+   - **Projects:** Marketing campaigns, automation setup, lead nurturing
 
 **User Roles:**
 - **Admin:** Full access to organization data
 - **Member:** Standard user access
 - **Viewer:** Read-only access
+
+**Cross-Organization Users:**
+- Kyle Roelofs (admin across all three organizations)
+- Shared team members can access multiple organizations
+- Organization switcher in user interface
+- Separate data contexts per organization
 
 ---
 
@@ -98,13 +140,15 @@ Centralized operations management platform for agencies and businesses to:
 - Opportunities pipeline
 - Revenue Pipeline value
 
-**Organizations Section:**
+**### Organizations Section:
 - Grid view of user's organizations
 - Organization name, role, and domain
-- "Open Organization" button with direct links
+- "Open Organization" button with direct links to:
+  - **SitePanda:** sitepandaseo.com
+  - **Decisions Unlimited:** ducrm.com
+  - **Logic Inbound:** my.logicinbound.com
 - Active status badges
-
-**Quick Actions Grid:**
+- Organization-specific branding and icons**Quick Actions Grid:**
 - Icon-based navigation to all modules
 - Clients, Projects, Opportunities, Notes
 - Integrations, Webhooks, SOPs, Monitoring
@@ -293,7 +337,15 @@ Connect external services and tools to the platform
 
 ### 10. SitePanda SEO Module
 
-Integrated SEO research and content generation tools from the SitePanda platform.
+**Organization-Specific Feature**
+
+Integrated SEO research and content generation tools **exclusively for SitePanda organization**. This module is not available to Decisions Unlimited or Logic Inbound users.
+
+**Access Control:**
+- Only visible to users with SitePanda organization membership
+- Navigation menu shows "🐼 SitePanda SEO" only for SitePanda users
+- All SEO data scoped to SitePanda organization
+- Separate billing/usage tracking for SitePanda
 
 #### 10.1 Keyword Research (`/sitepandaseo`)
 
@@ -812,4 +864,392 @@ psql unified_ops < backend/database/schema.sql
 The Unified Operations Platform is a comprehensive business management solution with integrated SEO tools, designed for agencies and service businesses. With its professional DUFulfill-inspired UI, multi-tenant architecture, and extensive feature set, it provides a solid foundation for managing clients, projects, and operations while offering powerful SEO research and content generation capabilities.
 
 The platform is production-ready, deployed on VPS infrastructure, and actively maintained with regular updates and improvements.
+
+
+
+
+---
+
+## Organization-Specific Workflows
+
+### SitePanda Workflow
+
+**Primary Use Case:** Local SEO website generation for small businesses
+
+**Typical Process:**
+1. **Research Phase**
+   - Conduct keyword research for target niche and location
+   - Analyze competitors in the local market
+   - Identify ranking opportunities
+
+2. **Planning Phase**
+   - Create site plan with business details
+   - Define target keywords and content strategy
+   - Set up project in project management
+
+3. **Content Generation**
+   - Generate AI-powered content for all pages
+   - Optimize for target keywords
+   - Review and edit generated content
+
+4. **Delivery Phase**
+   - Build and deploy website
+   - Track project status
+   - Manage client communications
+
+**Key Features Used:**
+- SitePanda SEO module (keyword research, competitor analysis)
+- Site Plans
+- Content Generation
+- Client Management
+- Project Tracking
+
+**Team Roles:**
+- SEO Specialists: Research and strategy
+- Content Creators: Content review and optimization
+- Web Developers: Site deployment
+- Account Managers: Client communication
+
+---
+
+### Decisions Unlimited Workflow
+
+**Primary Use Case:** Business consulting and strategic planning engagements
+
+**Typical Process:**
+1. **Client Intake**
+   - Add client to CRM
+   - Document initial consultation notes
+   - Create opportunity in sales pipeline
+
+2. **Engagement Setup**
+   - Create project for consulting engagement
+   - Define scope and deliverables
+   - Set timeline and milestones
+
+3. **Execution**
+   - Document processes in SOPs
+   - Track project progress
+   - Maintain detailed notes and documentation
+
+4. **Delivery & Follow-up**
+   - Complete deliverables
+   - Update project status
+   - Track ongoing opportunities
+
+**Key Features Used:**
+- Client Management
+- Opportunity Pipeline
+- Project Tracking
+- Notes & Documentation
+- SOPs (Standard Operating Procedures)
+
+**Team Roles:**
+- Business Consultants: Strategy development
+- Analysts: Research and analysis
+- Project Managers: Engagement coordination
+- Account Managers: Client relationships
+
+---
+
+### Logic Inbound Workflow
+
+**Primary Use Case:** Marketing automation and lead generation campaigns
+
+**Typical Process:**
+1. **Lead Capture**
+   - Track opportunities in pipeline
+   - Qualify leads by stage
+   - Assign to team members
+
+2. **Campaign Setup**
+   - Create project for campaign
+   - Configure integrations (CRM, email, ads)
+   - Set up webhooks for automation
+
+3. **Automation**
+   - Configure webhook triggers
+   - Set up automated workflows
+   - Monitor integration status
+
+4. **Optimization**
+   - Track opportunity progression
+   - Analyze conversion rates
+   - Document successful processes in SOPs
+
+**Key Features Used:**
+- Opportunity Pipeline (primary focus)
+- Integrations
+- Webhooks (Outgoing)
+- Project Tracking
+- Client Management
+
+**Team Roles:**
+- Marketing Specialists: Campaign strategy
+- Automation Experts: Technical setup
+- Lead Generation Specialists: Qualification and nurturing
+- Account Managers: Client success
+
+---
+
+## Organization-Specific Customizations
+
+### Branding Customization
+
+**SitePanda:**
+- **Primary Color:** Blue (#3b82f6) - SEO/tech focused
+- **Logo/Icon:** 🐼 Panda emoji
+- **Tagline:** "Local SEO Made Simple"
+- **Navigation:** Includes SitePanda SEO menu item
+- **Dashboard:** SEO-focused quick actions
+
+**Decisions Unlimited:**
+- **Primary Color:** Professional blue/navy
+- **Logo/Icon:** 📊 Chart/analytics emoji
+- **Tagline:** "Strategic Business Solutions"
+- **Navigation:** Standard CRM features
+- **Dashboard:** Consulting-focused metrics
+
+**Logic Inbound:**
+- **Primary Color:** Marketing green/blue
+- **Logo/Icon:** 🎯 Target emoji
+- **Tagline:** "Marketing Automation Experts"
+- **Navigation:** Emphasis on integrations and webhooks
+- **Dashboard:** Lead generation metrics
+
+### Feature Access Matrix
+
+| Feature | SitePanda | Decisions Unlimited | Logic Inbound |
+|---------|-----------|---------------------|---------------|
+| Client Management | ✅ | ✅ | ✅ |
+| Project Tracking | ✅ | ✅ | ✅ |
+| Opportunities | ✅ | ✅ | ✅ (Primary) |
+| Notes | ✅ | ✅ | ✅ |
+| Integrations | ✅ | ✅ | ✅ (Primary) |
+| Webhooks | ✅ | ✅ | ✅ (Primary) |
+| SOPs | ✅ | ✅ (Primary) | ✅ |
+| **Keyword Research** | ✅ (Exclusive) | ❌ | ❌ |
+| **Competitor Analysis** | ✅ (Exclusive) | ❌ | ❌ |
+| **Site Plans** | ✅ (Exclusive) | ❌ | ❌ |
+| **Content Generation** | ✅ (Exclusive) | ❌ | ❌ |
+
+### Data Isolation
+
+**Complete Separation:**
+- Each organization has its own clients (no sharing)
+- Projects are organization-specific
+- Opportunities are organization-specific
+- Notes are organization-specific
+- Integrations are configured per organization
+- Webhooks are organization-specific
+- SOPs are organization-specific
+
+**Shared Elements:**
+- User accounts (can belong to multiple orgs)
+- Platform infrastructure
+- Authentication system
+- UI/UX design system
+
+### Domain Routing
+
+**Production Domains:**
+- **sitepandaseo.com** → SitePanda organization context
+- **ducrm.com** → Decisions Unlimited organization context
+- **my.logicinbound.com** → Logic Inbound organization context
+
+**Organization Detection:**
+```javascript
+// Frontend: Detect organization from domain
+const getOrgFromDomain = () => {
+  const hostname = window.location.hostname;
+  if (hostname.includes('sitepanda')) return 'sitepanda';
+  if (hostname.includes('ducrm')) return 'du';
+  if (hostname.includes('logicinbound')) return 'logicinbound';
+  return 'sitepanda'; // default
+};
+
+// Backend: Organization-scoped API routes
+app.get('/api/v1/:orgSlug/clients', authenticateToken, async (req, res) => {
+  const { orgSlug } = req.params;
+  // Validate user has access to this organization
+  // Return only clients for this organization
+});
+```
+
+---
+
+## Multi-Organization User Experience
+
+### Organization Switcher
+
+**Dashboard View:**
+When a user belongs to multiple organizations, they see:
+1. **"Your Organizations" section** with cards for each organization
+2. **"Open [Organization Name]" buttons** to switch context
+3. **Current organization indicator** in sidebar
+4. **Organization-specific data** in all views
+
+**Example: Kyle Roelofs Dashboard**
+```
+Your Organizations:
+┌─────────────────────┐ ┌─────────────────────┐ ┌─────────────────────┐
+│ 🐼 SitePanda        │ │ 📊 Decisions Unltd  │ │ 🎯 Logic Inbound    │
+│ admin               │ │ admin               │ │ admin               │
+│ sitepandaseo.com    │ │ ducrm.com           │ │ my.logicinbound.com │
+│ [Open SitePanda →]  │ │ [Open DU →]         │ │ [Open Logic →]      │
+└─────────────────────┘ └─────────────────────┘ └─────────────────────┘
+```
+
+### Navigation Differences
+
+**SitePanda Navigation:**
+- 📊 Dashboard
+- 👥 Clients
+- 📁 Projects
+- 💡 Opportunities
+- 📝 Notes
+- **🐼 SitePanda SEO** ← Exclusive
+  - Keyword Research
+  - Competitor Analysis
+  - Site Plans
+  - Content Generation
+- 🔗 Integrations
+- 🌐 Webhooks
+- 📚 SOPs
+
+**Decisions Unlimited Navigation:**
+- 📊 Dashboard
+- 👥 Clients
+- 📁 Projects
+- 💡 Opportunities
+- 📝 Notes
+- 🔗 Integrations
+- 🌐 Webhooks
+- **📚 SOPs** ← Emphasized
+- 📊 Monitoring
+
+**Logic Inbound Navigation:**
+- 📊 Dashboard
+- 👥 Clients
+- 📁 Projects
+- **💡 Opportunities** ← Emphasized
+- 📝 Notes
+- **🔗 Integrations** ← Emphasized
+- **🌐 Webhooks** ← Emphasized
+- 📚 SOPs
+- 📊 Monitoring
+
+---
+
+## Billing & Usage Tracking (Future)
+
+### Per-Organization Billing
+
+**SitePanda:**
+- Charge per keyword research
+- Charge per competitor analysis
+- Charge per site plan created
+- Charge per content piece generated
+- Monthly subscription tier
+
+**Decisions Unlimited:**
+- Charge per active project
+- Charge per client
+- Monthly subscription tier
+- Consulting hours tracking
+
+**Logic Inbound:**
+- Charge per integration connection
+- Charge per webhook execution
+- Charge per opportunity
+- Monthly subscription tier
+
+### Usage Metrics
+
+Track separately per organization:
+- API calls
+- Storage used
+- Active users
+- Feature usage
+- Integration connections
+- Webhook executions
+
+---
+
+## Implementation Notes for Lovable
+
+### When Building Features
+
+**Always Consider:**
+1. **Organization Context:** Every feature must be organization-scoped
+2. **Access Control:** Check user has access to the organization
+3. **Data Isolation:** Never leak data between organizations
+4. **Branding:** Use organization-specific colors/logos
+5. **Feature Flags:** Some features are organization-exclusive (SitePanda SEO)
+
+**Code Pattern:**
+```typescript
+// Always get organization from context
+const orgSlug = getOrgFromContext(); // 'sitepanda', 'du', or 'logicinbound'
+
+// Validate user access
+if (!userHasAccessToOrg(user, orgSlug)) {
+  return res.status(403).json({ error: 'Access denied' });
+}
+
+// Scope all queries
+const clients = await db.query(
+  'SELECT * FROM clients WHERE organization_id = $1',
+  [organizationId]
+);
+
+// Check feature availability
+if (feature === 'seo-research' && orgSlug !== 'sitepanda') {
+  return res.status(403).json({ error: 'Feature not available' });
+}
+```
+
+### Database Queries
+
+**Always include organization filter:**
+```sql
+-- ❌ WRONG - No organization filter
+SELECT * FROM clients WHERE email = 'test@example.com';
+
+-- ✅ CORRECT - Organization-scoped
+SELECT * FROM clients 
+WHERE email = 'test@example.com' 
+AND organization_id = $1;
+```
+
+### UI Components
+
+**Organization-aware components:**
+```typescript
+// Get organization branding
+const orgBranding = {
+  sitepanda: { icon: '🐼', color: '#3b82f6', name: 'SitePanda' },
+  du: { icon: '📊', color: '#1e40af', name: 'Decisions Unlimited' },
+  logicinbound: { icon: '🎯', color: '#10b981', name: 'Logic Inbound' }
+};
+
+// Show/hide features based on organization
+{orgSlug === 'sitepanda' && (
+  <NavItem href="/sitepandaseo">🐼 SitePanda SEO</NavItem>
+)}
+```
+
+---
+
+## Summary
+
+The Unified Operations Platform serves **three distinct business units** (SitePanda, Decisions Unlimited, and Logic Inbound) as separate organizations within a shared infrastructure. Each organization has:
+
+- **Complete data isolation** (clients, projects, opportunities, etc.)
+- **Custom branding** (colors, logos, domains)
+- **Specific feature sets** (SitePanda has exclusive SEO tools)
+- **Separate workflows** optimized for their business model
+- **Independent billing** and usage tracking
+
+Users like Kyle Roelofs can access all three organizations, while other team members may be restricted to one or more organizations based on their role. The platform provides a seamless experience for switching between organizations while maintaining strict data boundaries.
 
