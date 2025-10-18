@@ -253,112 +253,135 @@ export default function ClientsPage() {
         </div>
       </main>
 
-      {/* Modal */}
+      {/* Dark Theme Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-card border border-border rounded-xl shadow-lg p-6 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-[#1a1a1a] border border-[#333] rounded-2xl shadow-2xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto">
             <div className="flex items-center gap-3 mb-6">
               <span className="text-3xl">👤</span>
-              <h2 className="text-2xl font-bold text-foreground">
+              <h2 className="text-2xl font-bold text-white">
                 {editingClient ? 'Edit Client' : 'Add New Client'}
               </h2>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Company Name */}
               <div>
-                <label className="block text-sm font-semibold text-foreground mb-2">Company Name</label>
-                <input 
-                  type="text" 
-                  value={formData.company_name} 
-                  onChange={(e) => setFormData({...formData, company_name: e.target.value})} 
-                  className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
-                  placeholder="Acme Corp"
-                />
+                <label className="block text-sm font-medium text-gray-300 mb-2">Company Name</label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">🏢</span>
+                  <input 
+                    type="text" 
+                    value={formData.company_name} 
+                    onChange={(e) => setFormData({...formData, company_name: e.target.value})} 
+                    className="w-full pl-12 pr-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-smooth"
+                    placeholder="Enter company name"
+                  />
+                </div>
               </div>
               
+              {/* First & Last Name */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">First Name</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">First Name</label>
                   <input 
                     type="text" 
                     value={formData.first_name} 
                     onChange={(e) => setFormData({...formData, first_name: e.target.value})} 
-                    className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
+                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-smooth"
                     placeholder="John"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">Last Name</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Last Name</label>
                   <input 
                     type="text" 
                     value={formData.last_name} 
                     onChange={(e) => setFormData({...formData, last_name: e.target.value})} 
-                    className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
+                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-smooth"
                     placeholder="Doe"
                   />
                 </div>
               </div>
               
+              {/* Email */}
               <div>
-                <label className="block text-sm font-semibold text-foreground mb-2">
-                  Email <span className="text-destructive">*</span>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Email <span className="text-red-400">*</span>
                 </label>
-                <input 
-                  type="email" 
-                  required 
-                  value={formData.email} 
-                  onChange={(e) => setFormData({...formData, email: e.target.value})} 
-                  className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
-                  placeholder="john@example.com"
-                />
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">📧</span>
+                  <input 
+                    type="email" 
+                    required 
+                    value={formData.email} 
+                    onChange={(e) => setFormData({...formData, email: e.target.value})} 
+                    className="w-full pl-12 pr-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-smooth"
+                    placeholder="john@example.com"
+                  />
+                </div>
               </div>
               
+              {/* Phone */}
               <div>
-                <label className="block text-sm font-semibold text-foreground mb-2">Phone</label>
-                <input 
-                  type="tel" 
-                  value={formData.phone} 
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})} 
-                  className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
-                  placeholder="+1 (555) 123-4567"
-                />
+                <label className="block text-sm font-medium text-gray-300 mb-2">Phone</label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">📞</span>
+                  <input 
+                    type="tel" 
+                    value={formData.phone} 
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})} 
+                    className="w-full pl-12 pr-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-smooth"
+                    placeholder="+1 (555) 123-4567"
+                  />
+                </div>
               </div>
               
+              {/* Status Dropdown */}
               <div>
-                <label className="block text-sm font-semibold text-foreground mb-2">Status</label>
-                <select 
-                  value={formData.status} 
-                  onChange={(e) => setFormData({...formData, status: e.target.value})} 
-                  className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
-                >
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                  <option value="lead">Lead</option>
-                </select>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Status</label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">📊</span>
+                  <select 
+                    value={formData.status} 
+                    onChange={(e) => setFormData({...formData, status: e.target.value})} 
+                    className="w-full pl-12 pr-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-smooth appearance-none cursor-pointer"
+                  >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="lead">Lead</option>
+                  </select>
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">▼</span>
+                </div>
               </div>
               
+              {/* Tags */}
               <div>
-                <label className="block text-sm font-semibold text-foreground mb-2">Tags (comma-separated)</label>
-                <input 
-                  type="text" 
-                  value={formData.tags} 
-                  onChange={(e) => setFormData({...formData, tags: e.target.value})} 
-                  placeholder="vip, enterprise, priority" 
-                  className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
-                />
+                <label className="block text-sm font-medium text-gray-300 mb-2">Tags (comma-separated)</label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">🏷️</span>
+                  <input 
+                    type="text" 
+                    value={formData.tags} 
+                    onChange={(e) => setFormData({...formData, tags: e.target.value})} 
+                    placeholder="vip, enterprise, priority" 
+                    className="w-full pl-12 pr-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-smooth"
+                  />
+                </div>
               </div>
               
+              {/* Action Buttons */}
               <div className="flex gap-3 pt-4">
                 <button 
                   type="submit" 
-                  className="flex-1 px-4 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-smooth font-semibold shadow-sm"
+                  className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-smooth font-semibold shadow-lg"
                 >
                   {editingClient ? 'Update Client' : 'Create Client'}
                 </button>
                 <button 
                   type="button" 
                   onClick={() => { setShowModal(false); setEditingClient(null); }} 
-                  className="flex-1 px-4 py-3 bg-muted text-foreground rounded-lg hover:bg-muted/80 transition-smooth font-semibold"
+                  className="flex-1 px-6 py-3 bg-[#2a2a2a] text-gray-300 rounded-xl hover:bg-[#333] transition-smooth font-semibold"
                 >
                   Cancel
                 </button>

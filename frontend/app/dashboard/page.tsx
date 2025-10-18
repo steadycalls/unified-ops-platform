@@ -73,53 +73,53 @@ export default function DashboardPage() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-20 sm:pb-8">
-        {/* KPI Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        {/* KPI Cards - Horizontal Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div className="bg-card border border-border rounded-xl shadow-smooth p-5 sm:p-6 card-hover transition-smooth">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Total Clients</h3>
-              <span className="text-2xl">👥</span>
+              <span className="text-3xl">👥</span>
             </div>
-            <p className="text-3xl sm:text-4xl font-bold text-foreground">0</p>
-            <p className="text-xs text-success mt-2">+0% from last month</p>
+            <p className="text-4xl font-bold text-foreground mb-2">0</p>
+            <p className="text-xs text-success">+0% from last month</p>
           </div>
           
           <div className="bg-card border border-border rounded-xl shadow-smooth p-5 sm:p-6 card-hover transition-smooth">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Active Projects</h3>
-              <span className="text-2xl">📁</span>
+              <span className="text-3xl">📁</span>
             </div>
-            <p className="text-3xl sm:text-4xl font-bold text-foreground">0</p>
-            <p className="text-xs text-success mt-2">+0% from last month</p>
+            <p className="text-4xl font-bold text-foreground mb-2">0</p>
+            <p className="text-xs text-success">+0% from last month</p>
           </div>
           
           <div className="bg-card border border-border rounded-xl shadow-smooth p-5 sm:p-6 card-hover transition-smooth">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Opportunities</h3>
-              <span className="text-2xl">💰</span>
+              <span className="text-3xl">💰</span>
             </div>
-            <p className="text-3xl sm:text-4xl font-bold text-foreground">0</p>
-            <p className="text-xs text-warning mt-2">0 pending review</p>
+            <p className="text-4xl font-bold text-foreground mb-2">0</p>
+            <p className="text-xs text-warning">0 pending review</p>
           </div>
           
           <div className="bg-card border border-border rounded-xl shadow-smooth p-5 sm:p-6 card-hover transition-smooth">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Revenue Pipeline</h3>
-              <span className="text-2xl">💵</span>
+              <span className="text-3xl">💵</span>
             </div>
-            <p className="text-3xl sm:text-4xl font-bold text-foreground">$0</p>
-            <p className="text-xs text-muted-foreground mt-2">Total potential value</p>
+            <p className="text-4xl font-bold text-foreground mb-2">$0</p>
+            <p className="text-xs text-muted-foreground">Total potential value</p>
           </div>
         </div>
 
-        {/* Organizations */}
+        {/* Organizations - Horizontal Layout with Links */}
         <div className="bg-card border border-border rounded-xl shadow-smooth p-6 mb-6 sm:mb-8">
           <div className="flex items-center gap-2 mb-5">
             <span className="text-2xl">🏢</span>
             <h2 className="text-xl font-bold text-foreground">Your Organizations</h2>
           </div>
           {organizations.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {organizations.map((org) => (
                 <div key={org.id} className="border border-border rounded-lg p-5 card-hover transition-smooth bg-gradient-surface">
                   <div className="flex items-start justify-between mb-3">
@@ -128,11 +128,19 @@ export default function DashboardPage() {
                       {org.role}
                     </span>
                   </div>
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-2 text-sm mb-4">
                     <p className="text-muted-foreground">
                       <span className="font-medium text-foreground">Domain:</span> {org.custom_domain}
                     </p>
                   </div>
+                  <a
+                    href={`https://${org.custom_domain}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-smooth text-center font-semibold text-sm shadow-sm"
+                  >
+                    Open {org.name} →
+                  </a>
                 </div>
               ))}
             </div>
