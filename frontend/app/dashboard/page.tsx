@@ -1,169 +1,175 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Sidebar from '../components/Sidebar';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import ProfessionalSidebar from "../components/ProfessionalSidebar";
+import SearchAndFilters from "../components/SearchAndFilters";
+import { Bell, User, Eye, UserPlus } from "lucide-react";
 
-export default function DashboardPage() {
+export default function Dashboard() {
   const router = useRouter();
-  const [userName, setUserName] = useState('');
-  const [organizations, setOrganizations] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem("token");
     if (!token) {
-      router.push('/login');
+      router.push("/login");
       return;
     }
 
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    setUserName(user.first_name || 'User');
-
-    const orgs = JSON.parse(localStorage.getItem('organizations') || '[]');
-    setOrganizations(orgs);
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
   }, [router]);
 
-  const stats = [
-    { label: 'Total Clients', value: '0', change: '+0%', icon: '👥', color: 'text-primary' },
-    { label: 'Active Projects', value: '0', change: '+0%', icon: '📁', color: 'text-success' },
-    { label: 'Opportunities', value: '0', pending: '0 pending', icon: '💡', color: 'text-warning' },
-    { label: 'Revenue Pipeline', value: '$0', subtext: 'Total potential value', icon: '💰', color: 'text-info' },
+  const metrics = [
+    { label: "Sites", value: "156", change: "+12", sublabel: "Total sites" },
+    { label: "Published", value: "143", change: "+8", sublabel: "Live sites" },
+    { label: "DD", value: "89", change: "+23", sublabel: "Due diligence" },
+    { label: "3-Click", value: "67", change: "+15", sublabel: "Quick builds" },
+    { label: "Domains", value: "134", change: "+9", sublabel: "Purchased" },
+    { label: "Phone", value: "145", change: "+11", sublabel: "Active numbers" },
+    { label: "GMBs", value: "128", change: "-3", sublabel: "Business profiles" },
+    { label: "Keywords", value: "24.5k", change: "", sublabel: "Tracked KWs" },
   ];
 
-  const quickActions = [
-    { icon: '👥', label: 'Clients', sublabel: 'Manage contacts', path: '/clients' },
-    { icon: '📁', label: 'Projects', sublabel: 'Track work', path: '/projects' },
-    { icon: '💡', label: 'Opportunities', sublabel: 'Sales pipeline', path: '/opportunities' },
-    { icon: '📝', label: 'Notes', sublabel: 'Documentation', path: '/notes' },
-    { icon: '🔗', label: 'Integrations', sublabel: 'Connect apps', path: '/integrations' },
-    { icon: '🌐', label: 'Webhooks', sublabel: 'Automation', path: '/webhooks' },
-    { icon: '📚', label: 'SOPs', sublabel: 'Documentation', path: '/sops' },
-    { icon: '📊', label: 'Monitoring', sublabel: 'System health', path: '/monitoring' },
+  const researchActivity = [
+    {
+      user: "Kyle Smith",
+      email: "k@example.com",
+      tenant: "Acme Corp",
+      niche: "Dentist Miami FL",
+      date: "09/12",
+      status: "Built",
+    },
+    {
+      user: "Jane Doe",
+      email: "jane@example.com",
+      tenant: "Globex Inc",
+      niche: "Plumber Austin TX",
+      date: "09/11",
+      status: "Building",
+    },
+    {
+      user: "John Smith",
+      email: "john@example.com",
+      tenant: "Acme Corp",
+      niche: "Lawyer NYC",
+      date: "09/10",
+      status: "Built",
+    },
   ];
+
+  if (!user) {
+    return null;
+  }
 
   return (
-    <Sidebar>
-      <div className="min-h-screen">
-        {/* Page Header */}
-        <header className="page-header sticky top-0 z-10">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-              <p className="text-muted-foreground mt-1">Welcome back, {userName}! 👋</p>
-            </div>
+    <div className="flex h-screen bg-background">
+      <ProfessionalSidebar />
+      
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top Bar */}
+        <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6">
+          <h1 className="text-xl font-bold text-foreground">SitePanda</h1>
+          
+          <div className="flex items-center gap-4">
+            <button className="relative p-2 hover:bg-muted rounded-lg transition-colors">
+              <Bell className="w-5 h-5 text-muted-foreground" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full"></span>
+            </button>
+            
+            <button className="flex items-center gap-2 p-2 hover:bg-muted rounded-lg transition-colors">
+              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                <span className="text-sm font-medium text-primary-foreground">K</span>
+              </div>
+            </button>
           </div>
         </header>
 
-        <div className="p-6 space-y-6">
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
-              <div key={index} className="stats-card card-hover animate-fadeIn">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">{stat.label}</p>
-                    <p className="text-3xl font-bold text-foreground">{stat.value}</p>
-                  </div>
-                  <div className={`text-4xl ${stat.color}`}>{stat.icon}</div>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  {stat.change && (
-                    <span className="text-muted-foreground">{stat.change} from last month</span>
-                  )}
-                  {stat.pending && (
-                    <span className="text-muted-foreground">{stat.pending}</span>
-                  )}
-                  {stat.subtext && (
-                    <span className="text-muted-foreground">{stat.subtext}</span>
+        {/* Main Content */}
+        <main className="flex-1 overflow-y-auto p-6 space-y-6">
+          {/* Metrics Grid */}
+          <div className="grid grid-cols-4 gap-4">
+            {metrics.map((metric, index) => (
+              <div key={index} className="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="text-sm text-muted-foreground mb-2">{metric.label}</div>
+                <div className="flex items-baseline gap-2">
+                  <div className="text-3xl font-bold text-foreground">{metric.value}</div>
+                  {metric.change && (
+                    <span className={metric.change.startsWith('+') ? 'text-green-600 text-sm font-medium' : 'text-red-600 text-sm font-medium'}>
+                      {metric.change}
+                    </span>
                   )}
                 </div>
+                <div className="text-xs text-muted-foreground mt-1">{metric.sublabel}</div>
               </div>
             ))}
           </div>
 
-          {/* Organizations Section */}
-          {organizations.length > 0 && (
-            <div className="content-section animate-fadeIn">
-              <div className="flex items-center gap-2 mb-6">
-                <span className="text-2xl">🏢</span>
-                <h2 className="text-xl font-bold text-foreground">Your Organizations</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {organizations.map((org) => (
-                  <div key={org.id} className="bg-card border border-border rounded-xl p-5 card-hover">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h3 className="text-lg font-bold text-foreground mb-1">{org.name}</h3>
-                        <p className="text-sm text-muted-foreground">{org.role}</p>
-                      </div>
-                      <span className="badge-success">Active</span>
-                    </div>
-                    {org.domain && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                        <span>🌐</span>
-                        <span>Domain: {org.domain}</span>
-                      </div>
-                    )}
-                    <button
-                      onClick={() => window.open(`https://${org.domain}`, '_blank')}
-                      className="w-full px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-smooth font-medium text-sm"
-                    >
-                      Open {org.name} →
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Search and Filters */}
+          <SearchAndFilters />
 
-          {/* Quick Actions */}
-          <div className="content-section animate-fadeIn">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="text-2xl">⚡</span>
-              <h2 className="text-xl font-bold text-foreground">Quick Actions</h2>
+          {/* Research Activity Table */}
+          <div className="bg-card border border-border rounded-lg overflow-hidden">
+            <div className="p-6 border-b border-border">
+              <div className="flex items-center gap-2">
+                <User className="w-5 h-5 text-foreground" />
+                <h2 className="text-lg font-semibold text-foreground">Research Activity</h2>
+              </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {quickActions.map((action, index) => (
-                <button
-                  key={index}
-                  onClick={() => router.push(action.path)}
-                  className="bg-card border border-border rounded-xl p-5 card-hover text-left"
-                >
-                  <div className="text-3xl mb-3">{action.icon}</div>
-                  <h3 className="font-semibold text-foreground mb-1">{action.label}</h3>
-                  <p className="text-xs text-muted-foreground">{action.sublabel}</p>
-                </button>
-              ))}
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-muted/50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">User</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Tenant</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Niche + Location</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Build Site</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {researchActivity.map((activity, index) => (
+                    <tr key={index} className="hover:bg-muted/50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-foreground">{activity.user}</div>
+                        <div className="text-xs text-muted-foreground">{activity.email}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">{activity.tenant}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">{activity.niche}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">{activity.date}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={activity.status === "Built" 
+                          ? "inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400" 
+                          : "inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400"
+                        }>
+                          {activity.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <div className="flex items-center gap-2">
+                          <button className="inline-flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+                            <Eye className="w-4 h-4" />
+                            View
+                          </button>
+                          <button className="inline-flex items-center gap-1 px-3 py-1.5 bg-muted text-foreground rounded-md hover:bg-muted/80 transition-colors">
+                            <UserPlus className="w-4 h-4" />
+                            Impersonate
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-
-          {/* Platform Status */}
-          <div className="content-section animate-fadeIn">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="text-2xl">✅</span>
-              <h2 className="text-xl font-bold text-foreground">Platform Status</h2>
-            </div>
-            <div className="space-y-3">
-              <p className="text-foreground font-medium">Your Unified Operations Platform is successfully deployed and running!</p>
-              <div className="flex flex-wrap gap-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-success">✓</span>
-                  <span className="text-muted-foreground">Backend Online</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-success">✓</span>
-                  <span className="text-muted-foreground">Database Connected</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-success">✓</span>
-                  <span className="text-muted-foreground">All Services Running</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </main>
       </div>
-    </Sidebar>
+    </div>
   );
 }
 
