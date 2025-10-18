@@ -2,46 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Professional DU Fulfill Design System - Applied to Unified Operations Platform
-All colors MUST be HSL format for consistency
+/* DUFulfill Design System - Dark Navy Theme
+Matching the professional aesthetic from dufulfill.com
 */
 
 @layer base {
   :root {
-    /* Professional color system */
-    --background: 0 0% 100%;
-    --foreground: 217 19% 27%;
+    /* DUFulfill Dark Navy Color System */
+    --background: 220 26% 14%; /* #1a2332 - Dark navy background */
+    --foreground: 210 40% 98%; /* #f8fafc - Light text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 217 19% 27%;
+    --card: 220 26% 18%; /* #232f42 - Card background */
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 217 19% 27%;
+    --popover: 220 26% 18%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 217 91% 60%; /* #3b82f6 - Blue accent */
+    --primary-foreground: 210 40% 98%;
     --primary-hover: 217 91% 55%;
 
-    --secondary: 217 10% 96%;
-    --secondary-foreground: 217 19% 27%;
+    --secondary: 220 26% 22%; /* #2a3749 - Secondary elements */
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 217 10% 96%;
-    --muted-foreground: 217 10% 45%;
+    --muted: 220 26% 22%; /* #2a3749 */
+    --muted-foreground: 215 20% 65%; /* #94a3b8 - Muted text */
 
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 217 91% 60%; /* #3b82f6 */
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%; /* #ef4444 - Red */
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 217 10% 89%;
-    --input: 217 10% 89%;
+    --border: 220 26% 25%; /* #313d52 - Borders */
+    --input: 220 26% 25%;
     --ring: 217 91% 60%;
 
-    --success: 142 71% 45%;
+    --success: 142 71% 45%; /* #10b981 - Green */
     --success-foreground: 0 0% 100%;
     
-    --warning: 38 92% 50%;
+    --warning: 38 92% 50%; /* #f59e0b - Orange */
     --warning-foreground: 0 0% 100%;
     
     --info: 217 91% 60%;
@@ -49,69 +49,28 @@ All colors MUST be HSL format for consistency
 
     --radius: 0.75rem;
 
+    /* Sidebar colors matching DUFulfill */
+    --sidebar-background: 220 26% 12%; /* #151e2c - Darker sidebar */
+    --sidebar-foreground: 215 20% 65%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 220 26% 22%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 220 26% 20%;
+    --sidebar-ring: 217 91% 60%;
+
     /* Professional gradients */
     --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 91% 70%));
-    --gradient-surface: linear-gradient(145deg, hsl(0 0% 100%), hsl(217 10% 98%));
+    --gradient-card: linear-gradient(135deg, hsl(220 26% 18%), hsl(220 26% 16%));
     
     /* Elegant shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(217 19% 27% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(217 19% 27% / 0.1), 0 2px 4px -1px hsl(217 19% 27% / 0.06);
-    --shadow-lg: 0 10px 15px -3px hsl(217 19% 27% / 0.1), 0 4px 6px -2px hsl(217 19% 27% / 0.05);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.4);
     
     /* Professional transitions */
     --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    
-    /* Dark theme gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 50%), hsl(217 91% 60%));
-    --gradient-surface: linear-gradient(145deg, hsl(240 5.9% 10%), hsl(240 3.7% 15.9%));
-    
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -125,20 +84,35 @@ All colors MUST be HSL format for consistency
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
+  /* Scrollbar styling to match DUFulfill */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-lg;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted;
+  }
+
   /* Mobile-specific enhancements */
   @media (max-width: 640px) {
-    /* Ensure touch targets are at least 44x44px */
     button, a, input, select, textarea {
       min-height: 44px;
       min-width: 44px;
     }
 
-    /* Prevent horizontal overflow */
     body {
       overflow-x: hidden;
     }
 
-    /* Improve text readability on mobile */
     h1 {
       @apply text-2xl;
     }
@@ -147,23 +121,19 @@ All colors MUST be HSL format for consistency
       @apply text-xl;
     }
 
-    /* Better spacing for mobile cards */
     .space-y-6 > * + * {
       @apply mt-4;
     }
 
-    /* Ensure dropdowns don't overflow */
     [role="menu"], [role="listbox"] {
       max-width: calc(100vw - 2rem);
     }
   }
 
-  /* Ensure proper touch scrolling on iOS */
   * {
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Hide scrollbars utility */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -173,14 +143,12 @@ All colors MUST be HSL format for consistency
     display: none;
   }
 
-  /* Prevent zoom on input focus (iOS) */
   @media (max-width: 640px) {
     input, select, textarea {
       font-size: 16px !important;
     }
   }
 
-  /* Professional button styles */
   button {
     @apply transition-all duration-200;
   }
@@ -189,14 +157,77 @@ All colors MUST be HSL format for consistency
     transform: scale(0.98);
   }
 
-  /* Card hover effects */
-  .card-hover {
-    @apply transition-all duration-200 hover:shadow-md;
-  }
-
-  /* Focus visible styles */
   *:focus-visible {
     @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  /* Card styles matching DUFulfill */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-primary/50;
+  }
+  
+  .stats-card {
+    @apply bg-gradient-card border border-border rounded-xl p-6 shadow-smooth;
+  }
+  
+  .content-section {
+    @apply bg-gradient-card border border-border rounded-xl p-6 shadow-smooth;
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply bg-gradient-primary text-white px-4 py-2 rounded-lg font-medium shadow-smooth hover:shadow-glow transition-smooth;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-foreground px-4 py-2 rounded-lg font-medium shadow-smooth hover:bg-muted transition-smooth;
+  }
+
+  /* Input styles */
+  .input-field {
+    @apply bg-card border border-border rounded-lg px-4 py-2 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-smooth;
+  }
+
+  /* Sidebar styles matching DUFulfill */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-muted-foreground hover:text-foreground hover:bg-sidebar-accent transition-smooth cursor-pointer;
+  }
+  
+  .sidebar-item-active {
+    @apply bg-primary/10 text-primary border-l-4 border-primary pl-3;
+  }
+
+  /* Table styles */
+  .table-header {
+    @apply bg-secondary text-xs font-semibold text-muted-foreground uppercase tracking-wider;
+  }
+  
+  .table-row {
+    @apply hover:bg-secondary/50 transition-smooth;
+  }
+
+  /* Status badges */
+  .badge-success {
+    @apply px-3 py-1 text-xs font-semibold rounded-full bg-success/10 text-success border border-success/20;
+  }
+  
+  .badge-warning {
+    @apply px-3 py-1 text-xs font-semibold rounded-full bg-warning/10 text-warning border border-warning/20;
+  }
+  
+  .badge-error {
+    @apply px-3 py-1 text-xs font-semibold rounded-full bg-destructive/10 text-destructive border border-destructive/20;
+  }
+  
+  .badge-info {
+    @apply px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary border border-primary/20;
+  }
+
+  /* Page header */
+  .page-header {
+    @apply bg-card border-b border-border px-6 py-4 shadow-smooth;
   }
 }
 
@@ -210,16 +241,46 @@ All colors MUST be HSL format for consistency
     background: var(--gradient-primary);
   }
 
-  .gradient-surface {
-    background: var(--gradient-surface);
+  .gradient-card {
+    background: var(--gradient-card);
   }
 
   .shadow-smooth {
     box-shadow: var(--shadow-md);
   }
 
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
   .transition-smooth {
     transition: var(--transition-smooth);
   }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
