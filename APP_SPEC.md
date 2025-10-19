@@ -408,113 +408,60 @@ const limiter = rateLimit({
 
 ## 9. Data Model
 
-### Core Tables
+See [DATABASE_SCHEMA.md](./DATABASE_SCHEMA.md) for the complete database schema with all tables, indexes, and Row-Level Security policies.
 
-#### Organizations
-```sql
-CREATE TABLE orgs (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
-  slug TEXT UNIQUE NOT NULL, -- 'li', 'sitepanda', 'du'
-  type TEXT NOT NULL, -- 'subaccount' or 'agency'
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
+### Key Tables Summary
 
-#### Organization Domains
-```sql
-CREATE TABLE org_domains (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  org_id UUID REFERENCES orgs(id),
-  domain TEXT UNIQUE NOT NULL,
-  is_primary BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
+**Identity & Organization:**
+- `users` - User accounts (email, display_name, avatar_url)
+- `orgs` - Organizations (agency + 3 subaccounts)
+- `org_domains` - Domain routing (my.logicinbound.com, etc.)
+- `role_bindings` - RBAC (user_id, role, org_id)
 
-#### Organization Secrets (KMS-encrypted)
-```sql
-CREATE TABLE org_secrets (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  org_id UUID REFERENCES orgs(id),
-  provider TEXT NOT NULL, -- 'openai', 'dataforseo', 'stripe', etc.
-  key_ref TEXT NOT NULL, -- Reference name for the key
-  meta JSONB, -- Additional metadata
-  rotated_at TIMESTAMPTZ,
-  enc_blob TEXT NOT NULL, -- KMS-encrypted secret
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(org_id, provider, key_ref)
-);
-```
+**Integrations & Secrets:**
+- `integrations` - OAuth status per org (GHL, Slack, Discord, etc.)
+- `org_secrets` - KMS-encrypted API keys (OpenAI, DataForSEO, etc.)
 
-#### Webhook Endpoints
-```sql
-CREATE TABLE webhook_endpoints (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  org_id UUID REFERENCES orgs(id),
-  event_key TEXT NOT NULL, -- 'lead.created', 'site.built', etc.
-  url TEXT NOT NULL,
-  secret TEXT NOT NULL, -- HMAC signing secret
-  active BOOLEAN DEFAULT TRUE,
-  last_status INTEGER, -- HTTP status code
-  retry_count INTEGER DEFAULT 0,
-  last_delivery_at TIMESTAMPTZ,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
+**Webhooks:**
+- `webhook_endpoints` - Outbound destinations
+- `webhook_deliveries` - Delivery log with retries
+- `webhook_inbound` - Inbound receipts from external services
 
-#### Role Bindings
-```sql
-CREATE TABLE role_bindings (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id),
-  role TEXT NOT NULL, -- 'admin', 'super_admin', etc.
-  scope_type TEXT NOT NULL, -- 'org', 'agency'
-  scope_ids UUID[] NOT NULL, -- Array of org_ids user has access to
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(user_id, role, scope_type)
-);
-```
-
-#### Users
-```sql
-CREATE TABLE users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email TEXT UNIQUE NOT NULL,
-  full_name TEXT,
-  password_hash TEXT NOT NULL,
-  is_super_admin BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-#### User Organization Roles
-```sql
-CREATE TABLE user_organization_roles (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id),
-  org_id UUID REFERENCES orgs(id),
-  role TEXT NOT NULL, -- 'admin', 'manager', 'user'
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(user_id, org_id)
-);
-```
-
-### Existing Tables (to be created)
+**Core Business:**
 - `accounts` - Clients/customers
-- `projects` - Work items per client
-- `tasks` - Individual tasks within projects
-- `audits` - Site audit results (LI)
-- `sites` - Built sites (SitePanda)
-- `gmb_listings` - GMB locations (DU)
-- `metrics_daily` - Daily rollup of KPIs
-- `billing` - Invoices and payments
-- `events` - Event outbox for webhooks
-- `assets` - Reusable templates, prompts, workflows
-- `sops` - Standard Operating Procedures
-- `runs` - Automation execution logs
-- `integrations` - OAuth tokens and integration status
+- `contacts` - Contact persons per account
+- `projects` - Work items (service, stage, SLA)
+- `tasks` - Individual tasks (status, assignee, SOP)
+- `sops` - Standard Operating Procedures (versioned)
+
+**Automation & Events:**
+- `runs` - n8n workflow execution logs
+- `events` - Event outbox (pending/dispatched/dead)
+- `audit_logs` - Full mutation trail
+
+**Metrics & Reporting:**
+- `metrics_daily` - Daily KPI rollup (partitioned by month)
+- `reports` - Generated PDFs (weekly, monthly, exec)
+- `billing` - Stripe integration and MRR tracking
+
+**LI Specific:**
+- `audits` - Site audit results (score, findings)
+- `audit_issues` - Normalized issues for querying
+
+**SitePanda Specific:**
+- `sites` - Built sites (domain, template, status)
+- `site_pages` - Pages with schema and interlinks
+
+**DU Specific:**
+- `gmblistings` - GMB locations (status, CTR, reviews)
+- `gmb_posts` - Published posts (update, offer, event)
+
+### Database Conventions
+- **IDs:** UUID v7 / ULID
+- **Timestamps:** `created_at`, `updated_at` (auto)
+- **Tenant Isolation:** `org_id` on all tables + RLS
+- **Enums:** `role_enum`, `org_type_enum`, `event_key_enum`, `task_status_enum`, `project_stage_enum`
+- **Soft Delete:** `deleted_at` where needed
 
 ## 10. Integrations
 
